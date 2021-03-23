@@ -1,0 +1,175 @@
+
+CREATE TABLE `User` (
+  `VetId` int(11) NOT NULL,
+  `UserName` varchar(40) NOT NULL,
+  `UserEmail` varchar(70) NOT NULL,
+  `UserPass` varchar(200) NOT NULL,
+  `UserLevel` char(1) not null,
+  `UserPhone` varchar(30) default null,
+  PRIMARY KEY (`VetId`, `UserName`)
+);
+
+CREATE TABLE `Pet` (
+  `VetId` int(11) NOT NULL,
+  `PetId` int(11) NOT NULL,
+  `PetName` varchar(70) NOT NULL,
+  `PetSpecie` varchar(70) DEFAULT NULL,
+  `PetAge` int(11) DEFAULT NULL,
+  `PetSize` varchar(70) NOT NULL,
+  `PetWeight` int(11) DEFAULT NULL,
+  PRIMARY KEY (`VetId`,`PetId`)
+) ;
+
+CREATE TABLE `Payments` (
+  `VetId` int(11) NOT NULL,
+  `PaymentId` int(11) NOT NULL,
+  `ClientId` int(11) NOT NULL,
+  `PaymentPrice` int(11) NOT NULL,
+  `PaymentAMount` int(11) NOT NULL,
+  `PaymentDate` date DEFAULT NULL,
+  `PaymentDesc` varchar(70) DEFAULT NULL,
+  PRIMARY KEY (`VetId`,`PaymentId`)
+);
+
+
+CREATE TABLE `Matters` (
+  `VetId` int(11) NOT NULL,
+  `MatterId` int(11) NOT NULL,
+  `MatterDesc` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`VetId`, `MatterId`)
+);
+
+CREATE TABLE `Dates` (
+  `VetId` int(11) NOT NULL,
+  `DateId` int(11) NOT NULL,
+  `DateDay` date NOT NULL,
+  `DateHourStart` varchar(15) NOT NULL,
+  `DateHourEnd` varchar(15) NOT NULL,
+  `PetId` int(11) DEFAULT NULL,
+  `ClientId` int(11) DEFAULT NULL,
+  `DateMatter` int(11) DEFAULT NULL,
+  `DateAddress` varchar(70) DEFAULT NULL,
+  PRIMARY KEY (`VetId`,`DateDay`,`DateHourStart`,`DateHourEnd`)
+);
+
+
+CREATE TABLE `Veterinary` (
+  `VetId` int(11) NOT NULL AUTO_INCREMENT,
+  `VetName` varchar(100) NOT NULL,
+  PRIMARY KEY (`VetId`)
+);
+
+
+
+CREATE TABLE `ClientPet` (
+  `VetId` int(11) NOT NULL,
+  `ClientId` int(11) NOT NULL,
+  `PetId` int(11) NOT NULL,
+  PRIMARY KEY (`VetId`,`ClientId`,`PetId`)
+) ;
+
+
+CREATE TABLE `Client` (
+  `VetId` int(11) NOT NULL,
+  `ClientId` varchar(25) NOT NULL,
+  `ClientName` varchar(70) NOT NULL,
+  `ClientMail` varchar(100) DEFAULT NULL,
+  `ClientPhone` varchar(30) DEFAULT NULL,
+  `ClientBDate` date DEFAULT NULL,
+  `ClientAddress` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`VetId`,`ClientId`)
+);
+
+CREATE TABLE `Jail` (
+	`VetId`         int(11) NOT NULL,
+	`JailId`        int(11) NOT NULL,
+	`JailLarge`     int(11) NOT NULL,
+	`JailHeight`    int(11) NOT NULL,
+	`JailOcupation` char(1) NOT NULL,
+	`JailState`		int(1)  NOT NUll,
+	PRIMARY KEY (`VetId`, `JailId`)
+);
+
+CREATE TABLE `PetHistory` (
+	`VetId`  int(11) NOT NULL,
+	`DateId` int(11) NOT NULL,
+	`HistDetail` varchar(150) DEFAULT NULL,
+	PRIMARY KEY (`VetId`,`DateId`)
+);
+
+CREATE TABLE `Pinv` (
+	VetId   int(11)     not null,
+	PrdId   int(8)      not null,
+	InvFch  date        not null,
+	InvCnt  int(11)     not null,
+	InvSts  varchar(3)  not null,
+	InvObs  varchar(70) default null,
+	InvUxE  varchar(1)  not null,
+	Invdir  varchar(3)  not null,
+	PRIMARY KEY(VetId,PrdId,InvFch)
+);
+
+CREATE TABLE `Product` (
+	VetId   int(11) not null,
+	PrdId   int(8)  not null,
+	PrdName varchar(30) not null,
+	PrdDsc  varchar(70) not null,
+	PrdUxE  int(5)  not null,
+	PRIMARY KEY (VetId,PrdId)
+);
+
+CREATE TABLE `Stock` (
+	VetId   int(11) not null,
+	PrdId   int(8)  not null,
+	StkCnt  int(11) not null,
+	PRIMARY KEY (VetId,PrdId)
+);
+
+
+insert into Veterinary values (1, 'Vetiplus');
+insert into Veterinary values (2, 'VetMaster');
+
+INSERT Into Jail (VetId,JailId,JailLarge,JailHeight,JailOcupation,JailState) VALUES(1,1,120,100,'H',0);
+INSERT Into Jail (VetId,JailId,JailLarge,JailHeight,JailOcupation,JailState) VALUES(1,2,120,100,'H',1);
+INSERT Into Jail (VetId,JailId,JailLarge,JailHeight,JailOcupation,JailState) VALUES(1,3,120,100,'H',0);
+INSERT INTO Jail (VetId,JailId,JailLarge,JailHeight,JailOcupation,JailState) VALUES(1,4,120,100,'H',0);
+
+INSERT Into Jail (VetId,JailId,JailLarge,JailHeight,JailOcupation,JailState) VALUES(1,5,120,100,'C',0);
+INSERT Into Jail (VetId,JailId,JailLarge,JailHeight,JailOcupation,JailState) VALUES(1,6,120,100,'C',1);
+INSERT Into Jail (VetId,JailId,JailLarge,JailHeight,JailOcupation,JailState) VALUES(1,7,120,100,'C',0);
+INSERT Into Jail (VetId,JailId,JailLarge,JailHeight,JailOcupation,JailState) VALUES(1,8,120,100,'C',1);
+
+INSERT into PetHistory (VetId,DateId,HistDetail) Values (1,2,'Consulta de Rutina');
+
+insert into User values (1, 'admin', 'admin@gmail.com', 'admin', 'A', '097711938');
+insert into User values (1, 'user', 'user@gmail.com', 'user', 'U', '097711938');
+insert into User values (2, 'admin2', 'admin@gmail.com', 'admin2', 'A', '097711938');
+insert into User values (2, 'user2', 'user@gmail.com', 'user2', 'U', '097711938');
+
+insert into Matters values (1, 1, 'Corte de pelo');
+insert into Matters values (1, 2, 'Vacuna');
+insert into Matters values (1, 3, 'Visita a domicilio');
+insert into Matters values (1, 4, 'Ecografia');
+insert into Matters values (1, 5, 'Cirugia');
+insert into Matters values (1, 6, 'Otro');
+INSERT INTO Matters VALUES(1, 500, 'Limpieza');
+INSERT INTO Matters VALUES(1, 501, 'Carga');
+INSERT INTO Matters VALUES(1, 502, 'Medicamentos');
+
+CREATE TABLE `Expenses` (
+  `VetId` int(11) NOT NULL,
+  `ExpenseId` int(11) NOT NULL,
+  `ExpenseAmount` int(11) NOT NULL,
+  `ExpenseDate` date DEFAULT NULL,
+  `MatterId` int(11) NOT NULL,
+  `ExpenseDesc` varchar(70) DEFAULT NULL,
+  `ExpenseEmp` varchar(70) DEFAULT NULL,
+  PRIMARY KEY (`VetId`,`ExpenseId`)
+);
+
+create table `UserRequest` (
+  `RequestId` int(11) NOT NULL,
+  `RequestMail` varchar(100) NOT NULL,
+  `RequestDate` date NOT NULL,
+   PRIMARY KEY (`RequestId`)
+);
